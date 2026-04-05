@@ -85,7 +85,7 @@ resource "aws_ecs_task_definition" "api_task" {
   memory                   = "512" # 512 MB de RAM
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
 
-  container_definitions = jsonencode([{
+container_definitions = jsonencode([{
     name      = "angel-api-container"
     image     = "${aws_ecr_repository.api_repo.repository_url}:latest"
     essential = true
@@ -93,6 +93,16 @@ resource "aws_ecs_task_definition" "api_task" {
       containerPort = 8080
       hostPort      = 8080
     }]
+    # AÑADE ESTO:
+    logConfiguration = {
+      logDriver = "awslogs"
+      options = {
+        "awslogs-group"         = "/ecs/angel-api"
+        "awslogs-region"        = "eu-west-1"
+        "awslogs-stream-prefix" = "ecs"
+        "awslogs-create-group"  = "true"
+      }
+    }
   }])
 }
 
