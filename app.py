@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route('/')
 def hello():
     # Lee la versión de las variables de entorno (por defecto 1.0)
-    version = os.environ.get('APP_VERSION', '1.0')
+    version = os.environ.get('APP_VERSION', '2.0 (Desplegado por GitHub Actions)')
     return f"<h1>Hola, soy la API de Ángel</h1><p>Desplegada con Docker y Terraform. Version: {version}</p>"
 
 @app.route('/health')
